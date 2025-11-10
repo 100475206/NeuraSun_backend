@@ -1,0 +1,6 @@
+[submodule "generacion"]
+	path = generacion
+	url = https://github.com/100475206/Algoritmo-de-generacion-NeuraSun.git
+[submodule "consumo"]
+	path = consumo
+	url = https://github.com/100475206/Algoritmo-consumo-NeuraSun.git
