@@ -4,3 +4,6 @@
 [submodule "consumo"]
 	path = consumo
 	url = https://github.com/100475206/Algoritmo-consumo-NeuraSun.git
+[submodule "motor_decision"]
+	path = motor_decision
+	url = https://github.com/Adsolf/Motor_decision_neurasun.git
