@@ -27,4 +27,31 @@ def clean_consumption_data(df_raw: pd.DataFrame, timezone: str = 'UTC'):
     else:
         df.index = df.index.tz_convert(timezone)
 
+
+    df = df.sort_index()
+    df = df[~df.index.duplicated(keep="first")]
+
+    # Renombrado de variable consumo según entre
+    df.rename(columns={
+        'value': 'consumption',
+        'cons': 'consumption',
+        'consumo': 'consumption',
+        'consumption': 'consumption'
+    }, inplace=True)
+
+    df['consumption'] = pd.to_numeric(df['consumption'], errors='coerce')
+
+    # Manejo de NaNs en las columnas numéricas (por ahora eliminamos filas con NaN,
+    # pero se puede mejorar con imputación)
+    df = df.dropna(subset=['consumption'])
+
+    # Filtrado de outliers (por ahora eliminamos valores negativos)
+    df = df[df['consumption'] >= 0]
+    df = df[df['consumption'] <= df['consumption'].quantile(0.99)]
+
+    # Frecuencia temporal uniforme (15 minutos)
+    df = df.asfreq('15min')
+    df['consumption'] = df['consumption'].interpolate(method='time')
+
+
     return df
